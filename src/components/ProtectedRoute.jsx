@@ -1,9 +1,9 @@
-import { useAuth } from '@/hooks/useAuth'
-import LoginForm from '@/components/LoginForm'
-import { Loader2 } from 'lucide-react'
+import { Navigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { Loader2 } from "lucide-react";
 
 export default function ProtectedRoute({ children }) {
-  const { user, loading } = useAuth()
+  const { user, loading } = useAuth();
 
   if (loading) {
     return (
@@ -13,13 +13,13 @@ export default function ProtectedRoute({ children }) {
           <p className="text-muted-foreground">Loading...</p>
         </div>
       </div>
-    )
+    );
   }
 
+  // 🚨 Redirect to /login instead of rendering LoginForm directly
   if (!user) {
-    return <LoginForm />
+    return <Navigate to="/login" replace />;
   }
 
-  return children
+  return children;
 }
-
